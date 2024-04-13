@@ -2,7 +2,7 @@ import './App.css'
 import * as React from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import QueryApp from './components/QueryApp'
+import QueryApp1 from './components/QueryApp1'
 
 const queryClient = new QueryClient()
 
@@ -24,7 +24,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <QueryApp />
+      <QueryApp1 />
       <ReactQueryDevtools initialIsOpen />
       {showDevtools && (
         <React.Suspense fallback={null}>
