@@ -1,30 +1,32 @@
-
-import { Fragment } from 'react'
-import { Menu } from '@headlessui/react'
-
-const links = [
-    { href: '/account-settings', label: 'Account settings' },
-    { href: '/support', label: 'Support' },
-    { href: '/license', label: 'License' },
-    { href: '/sign-out', label: 'Sign out' },
-]
+import React, { useState } from 'react';
+import axios from 'axios';
 
 export default function Login() {
+    const [email, setEmail] = useState('test@123');
+    const [password, setPassword] = useState('1234');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('/api/login', {
+                email,
+                password
+            },
+
+            );
+            console.log("token?", response.data);
+            localStorage.setItem('token', response.data.token);
+        } catch (error) {
+            console.error(error);
+        }
+    }
     return (
-        <Menu>
-            <Menu.Button>Options</Menu.Button>
-            <Menu.Items>
-                {links.map((link) => (
-                    <Menu.Item
-                        as="a"
-                        key={link.href}
-                        href={link.href}
-                        className="ui-active:bg-blue-500 ui-active:text-white ui-not-active:bg-white ui-not-active:text-black"
-                    >
-                        {link.label}
-                    </Menu.Item>
-                ))}
-            </Menu.Items>
-        </Menu>
+        <div>
+            <form onSubmit={handleSubmit}>
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <button type="submit">Login</button>
+            </form>
+        </div>
     )
 }
